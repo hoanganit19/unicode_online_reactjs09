@@ -6,13 +6,16 @@ import {
 import { composeWithDevTools } from "@redux-devtools/extension";
 import { counterReducer } from "./reducers/counterReducer";
 import { todoListReducer } from "./reducers/todoListReducer";
-import { loggerMiddleware } from "./middlewares/loggerMiddleware";
+import { fetchDataMiddleware } from "./middlewares/fetchDataMiddleware";
+import { postReducer } from "./reducers/postReducer";
+// import { loggerMiddleware } from "./middlewares/loggerMiddleware";
 
 const rootReducer = combineReducers({
   counter: counterReducer,
   todo: todoListReducer,
+  posts: postReducer,
 });
-const middlewares = [loggerMiddleware];
+const middlewares = [fetchDataMiddleware];
 export const store = createStore(
   rootReducer,
   composeWithDevTools(applyMiddleware(...middlewares))

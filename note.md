@@ -25,3 +25,7 @@ Hook: useDispatch, useSelector
 - Dispatch
 - Reducer --> Hàm dùng để cập nhật State (Chứa logic cập nhật State)
 - Selector --> Lắng nghe sự thay đổi State trên Store để re-render Component và trả về State từ Store
+
+## Redux Middleware
+
+Component (UI) ==> Dispatch ==> Middleware ==> Reducer ==> State
