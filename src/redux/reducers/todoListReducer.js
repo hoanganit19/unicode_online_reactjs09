@@ -6,6 +6,12 @@ export const todoListReducer = (state = initialState, action) => {
     case "todoList/add": {
       return { ...state, todoList: [...state.todoList, action.payload] };
     }
+    case "todoList/remove": {
+      return {
+        ...state,
+        todoList: state.todoList.filter((_, index) => index !== action.payload),
+      };
+    }
     default:
       return state;
   }
