@@ -60,3 +60,9 @@ Lưu ý: Khi làm việc với Redux Toolkit trong React ==> Cài 2 thư viện
 
 - react-redux
 - reduxjs/toolkit
+
+Async Action
+
+- pending
+- fulfilled
+- rejected

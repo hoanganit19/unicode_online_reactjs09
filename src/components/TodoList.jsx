@@ -12,6 +12,7 @@ import {
 
 export default function TodoList() {
   const todoList = useSelector((state) => state.todo.todoList);
+  const status = useSelector((state) => state.todo.status);
   const [value, setValue] = useState("");
   const dispatch = useDispatch();
   const handleSubmit = (e) => {
@@ -39,20 +40,30 @@ export default function TodoList() {
   useEffect(() => {
     dispatch(getTodos());
   }, [dispatch]);
+  if (status === "error") {
+    return <h2>Something went wrong</h2>;
+  }
   return (
     <div>
       <h1>TodoList</h1>
       <ul>
-        {todoList.map((todo) => (
-          <li key={todo.id} className={`${todo.completed ? "completed" : ""}`}>
-            <input
-              type="checkbox"
-              onChange={(e) => handleComleted(todo.id, e.target.checked)}
-            />
-            <span>{todo.title}</span>
-            <button onClick={() => handleRemove(todo.id)}>&times;</button>
-          </li>
-        ))}
+        {status === "pending" ? (
+          <h2>Loading...</h2>
+        ) : (
+          todoList.map((todo) => (
+            <li
+              key={todo.id}
+              className={`${todo.completed ? "completed" : ""}`}
+            >
+              <input
+                type="checkbox"
+                onChange={(e) => handleComleted(todo.id, e.target.checked)}
+              />
+              <span>{todo.title}</span>
+              <button onClick={() => handleRemove(todo.id)}>&times;</button>
+            </li>
+          ))
+        )}
       </ul>
       <hr />
       <form action="" onSubmit={handleSubmit}>
