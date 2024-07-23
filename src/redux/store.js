@@ -6,8 +6,9 @@ import {
 import { composeWithDevTools } from "@redux-devtools/extension";
 import { counterReducer } from "./reducers/counterReducer";
 import { todoListReducer } from "./reducers/todoListReducer";
-import { fetchDataMiddleware } from "./middlewares/fetchDataMiddleware";
+// import { fetchDataMiddleware } from "./middlewares/fetchDataMiddleware";
 import { postReducer } from "./reducers/postReducer";
+import { asyncMiddleware } from "./core/asyncMiddleware";
 // import { loggerMiddleware } from "./middlewares/loggerMiddleware";
 
 const rootReducer = combineReducers({
@@ -15,7 +16,7 @@ const rootReducer = combineReducers({
   todo: todoListReducer,
   posts: postReducer,
 });
-const middlewares = [fetchDataMiddleware];
+const middlewares = [asyncMiddleware];
 export const store = createStore(
   rootReducer,
   composeWithDevTools(applyMiddleware(...middlewares))

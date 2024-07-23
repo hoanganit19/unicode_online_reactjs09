@@ -1,13 +1,14 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPosts } from "../redux/actions/postActions";
+import { postsMiddleware } from "../redux/middlewares/postsMiddleware";
+// import { fetchPosts } from "../redux/actions/postActions";
 
 export default function Posts() {
   const posts = useSelector((state) => state.posts.posts);
   const status = useSelector((state) => state.posts.status);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchPosts());
+    dispatch(postsMiddleware());
   }, [dispatch]);
   if (status === "error") {
     return <h2>Error</h2>;
