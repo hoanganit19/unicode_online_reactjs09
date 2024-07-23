@@ -29,3 +29,34 @@ Hook: useDispatch, useSelector
 ## Redux Middleware
 
 Component (UI) ==> Dispatch ==> Middleware ==> Reducer ==> State
+
+## Redux Toolkit
+
+- Đóng gói các thành phần của Redux trong 1 thư viện
+- Hỗ trợ rất nhiều các tính năng
+- Cấu hình, thiết lập nhanh hơn, ngắn hơn
+
+```
+Slice 1
+    - Reducer
+    - State
+    - Action
+    - Action Creator
+
+Slice 2
+    - Reducer
+    - State
+    - Action
+    - Action Creator
+
+Slice 3
+    - Reducer
+    - State
+    - Action
+    - Action Creator
+```
+
+Lưu ý: Khi làm việc với Redux Toolkit trong React ==> Cài 2 thư viện
+
+- react-redux
+- reduxjs/toolkit
