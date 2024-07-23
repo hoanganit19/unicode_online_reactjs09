@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 import { useDispatch, useSelector } from "react-redux";
 import "./TodoList.css";
 // import { removeTodo, todoAdd } from "../redux/actions/todoActions";
 import {
   completedTodo,
+  getTodos,
   removeTodo,
   todoAdd,
 } from "../redux-toolkit/slice/todoSlice";
@@ -35,6 +36,9 @@ export default function TodoList() {
   const handleComleted = (id, status) => {
     dispatch(completedTodo({ id, status }));
   };
+  useEffect(() => {
+    dispatch(getTodos());
+  }, [dispatch]);
   return (
     <div>
       <h1>TodoList</h1>
@@ -45,7 +49,7 @@ export default function TodoList() {
               type="checkbox"
               onChange={(e) => handleComleted(todo.id, e.target.checked)}
             />
-            <span>{todo.name}</span>
+            <span>{todo.title}</span>
             <button onClick={() => handleRemove(todo.id)}>&times;</button>
           </li>
         ))}

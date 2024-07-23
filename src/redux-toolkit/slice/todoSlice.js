@@ -6,6 +6,9 @@ export const todoSlice = createSlice({
     todoList: [],
   },
   reducers: {
+    loadTodos: (state, action) => {
+      state.todoList = action.payload;
+    },
     todoAdd: (state, action) => {
       state.todoList.push(action.payload);
     },
@@ -28,4 +31,14 @@ export const todoSlice = createSlice({
   },
 });
 
-export const { todoAdd, removeTodo, completedTodo } = todoSlice.actions;
+export const { todoAdd, removeTodo, completedTodo, loadTodos } =
+  todoSlice.actions;
+
+//Redux Thunk
+export const getTodos = () => {
+  return async (dispatch) => {
+    const response = await fetch("https://jsonplaceholder.typicode.com/todos");
+    const data = await response.json();
+    dispatch(loadTodos(data));
+  };
+};
