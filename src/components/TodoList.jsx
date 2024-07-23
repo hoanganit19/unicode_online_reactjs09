@@ -1,6 +1,13 @@
 import { useState } from "react";
+import { v4 as uuid } from "uuid";
 import { useDispatch, useSelector } from "react-redux";
-import { removeTodo, todoAdd } from "../redux/actions/todoActions";
+import "./TodoList.css";
+// import { removeTodo, todoAdd } from "../redux/actions/todoActions";
+import {
+  completedTodo,
+  removeTodo,
+  todoAdd,
+} from "../redux-toolkit/slice/todoSlice";
 
 export default function TodoList() {
   const todoList = useSelector((state) => state.todo.todoList);
@@ -11,22 +18,35 @@ export default function TodoList() {
     if (!value) {
       return alert("Vui lòng nhập");
     }
-    dispatch(todoAdd(value));
+    const todo = {
+      id: uuid(),
+      name: value,
+      completed: false,
+    };
+    dispatch(todoAdd(todo));
     setValue("");
   };
   const handleChangeValue = (e) => {
     setValue(e.target.value);
   };
-  const handleRemove = (index) => {
-    dispatch(removeTodo(index));
+  const handleRemove = (id) => {
+    dispatch(removeTodo(id));
+  };
+  const handleComleted = (id, status) => {
+    dispatch(completedTodo({ id, status }));
   };
   return (
     <div>
       <h1>TodoList</h1>
       <ul>
-        {todoList.map((todo, index) => (
-          <li key={index}>
-            {todo} <button onClick={() => handleRemove(index)}>&times;</button>
+        {todoList.map((todo) => (
+          <li key={todo.id} className={`${todo.completed ? "completed" : ""}`}>
+            <input
+              type="checkbox"
+              onChange={(e) => handleComleted(todo.id, e.target.checked)}
+            />
+            <span>{todo.name}</span>
+            <button onClick={() => handleRemove(todo.id)}>&times;</button>
           </li>
         ))}
       </ul>
