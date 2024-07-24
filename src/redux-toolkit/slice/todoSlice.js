@@ -1,4 +1,5 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice, createSelector } from "@reduxjs/toolkit";
+import { getTodos } from "../middlewares/todoMiddleware";
 
 export const todoSlice = createSlice({
   name: "todo",
@@ -52,22 +53,10 @@ export const todoSlice = createSlice({
 export const { todoAdd, removeTodo, completedTodo, loadTodos } =
   todoSlice.actions;
 
-//Redux Thunk
-// export const getTodos = () => {
-//   return async (dispatch) => {
-//     const response = await fetch("https://jsonplaceholder.typicode.com/todos");
-//     const data = await response.json();
-//     dispatch(loadTodos(data));
-//   };
-// };
-export const getTodos = createAsyncThunk(
-  "todo/getTodos",
-  async (_, { rejectWithValue }) => {
-    const response = await fetch("https://jsonplaceholder.typicode.com/todos1");
-    if (!response.ok) {
-      return rejectWithValue("Error");
-    }
-    const data = await response.json();
-    return data;
-  }
+//Selector
+export const selectorTodoList = (state) => state.todo.todoList;
+export const selectorStatus = (state) => state.todo.status;
+export const selectorTodoListCompleted = createSelector(
+  [selectorTodoList],
+  (todoList) => todoList.filter((todo) => todo.completed)
 );

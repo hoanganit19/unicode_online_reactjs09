@@ -5,14 +5,18 @@ import "./TodoList.css";
 // import { removeTodo, todoAdd } from "../redux/actions/todoActions";
 import {
   completedTodo,
-  getTodos,
   removeTodo,
+  selectorStatus,
+  selectorTodoList,
+  selectorTodoListCompleted,
   todoAdd,
 } from "../redux-toolkit/slice/todoSlice";
+import { getTodos } from "../redux-toolkit/middlewares/todoMiddleware";
 
 export default function TodoList() {
-  const todoList = useSelector((state) => state.todo.todoList);
-  const status = useSelector((state) => state.todo.status);
+  const todoList = useSelector(selectorTodoList);
+  const status = useSelector(selectorStatus);
+  const todoListCompleted = useSelector(selectorTodoListCompleted);
   const [value, setValue] = useState("");
   const dispatch = useDispatch();
   const handleSubmit = (e) => {
@@ -64,6 +68,14 @@ export default function TodoList() {
             </li>
           ))
         )}
+      </ul>
+      <h2>Todo List Completed</h2>
+      <ul>
+        {todoListCompleted.map((todo) => (
+          <li key={todo.id} className={`${todo.completed ? "completed" : ""}`}>
+            <span>{todo.title}</span>
+          </li>
+        ))}
       </ul>
       <hr />
       <form action="" onSubmit={handleSubmit}>
